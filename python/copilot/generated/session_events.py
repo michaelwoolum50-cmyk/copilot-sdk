@@ -186,6 +186,7 @@ class Selection:
 
 
 class AttachmentType(Enum):
+    BLOB = "blob"
     DIRECTORY = "directory"
     FILE = "file"
     GITHUB_REFERENCE = "github_reference"
@@ -232,6 +233,12 @@ class Attachment:
     url: str | None = None
     """URL to the referenced item on GitHub"""
 
+    data: str | None = None
+    """Base64-encoded content"""
+
+    mime_type: str | None = None
+    """MIME type of the inline data"""
+
     @staticmethod
     def from_dict(obj: Any) -> 'Attachment':
         assert isinstance(obj, dict)
@@ -247,7 +254,9 @@ class Attachment:
         state = from_union([from_str, from_none], obj.get("state"))
         title = from_union([from_str, from_none], obj.get("title"))
         url = from_union([from_str, from_none], obj.get("url"))
-        return Attachment(type, display_name, line_range, path, file_path, selection, text, number, reference_type, state, title, url)
+        data = from_union([from_str, from_none], obj.get("data"))
+        mime_type = from_union([from_str, from_none], obj.get("mimeType"))
+        return Attachment(type, display_name, line_range, path, file_path, selection, text, number, reference_type, state, title, url, data, mime_type)
 
     def to_dict(self) -> dict:
         result: dict = {}
@@ -274,6 +283,10 @@ class Attachment:
             result["title"] = from_union([from_str, from_none], self.title)
         if self.url is not None:
             result["url"] = from_union([from_str, from_none], self.url)
+        if self.data is not None:
+            result["data"] = from_union([from_str, from_none], self.data)
+        if self.mime_type is not None:
+            result["mimeType"] = from_union([from_str, from_none], self.mime_type)
         return result
 
 

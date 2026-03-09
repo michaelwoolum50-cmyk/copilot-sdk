@@ -475,6 +475,10 @@ type Attachment struct {
 	Title *string `json:"title,omitempty"`
 	// URL to the referenced item on GitHub
 	URL *string `json:"url,omitempty"`
+	// Base64-encoded content
+	Data *string `json:"data,omitempty"`
+	// MIME type of the inline data
+	MIMEType *string `json:"mimeType,omitempty"`
 }
 
 // Optional line range to scope the attachment to a specific section of the file
@@ -854,6 +858,7 @@ const (
 type AttachmentType string
 
 const (
+	Blob            AttachmentType = "blob"
 	Directory       AttachmentType = "directory"
 	File            AttachmentType = "file"
 	GithubReference AttachmentType = "github_reference"

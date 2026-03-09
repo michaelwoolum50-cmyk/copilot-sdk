@@ -1870,6 +1870,22 @@ public partial class UserMessageDataAttachmentsItemGithubReference : UserMessage
     public required string Url { get; set; }
 }
 
+public partial class UserMessageDataAttachmentsItemBlob : UserMessageDataAttachmentsItem
+{
+    [JsonIgnore]
+    public override string Type => "blob";
+
+    [JsonPropertyName("data")]
+    public required string Data { get; set; }
+
+    [JsonPropertyName("mimeType")]
+    public required string MimeType { get; set; }
+
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    [JsonPropertyName("displayName")]
+    public string? DisplayName { get; set; }
+}
+
 [JsonPolymorphic(
     TypeDiscriminatorPropertyName = "type",
     UnknownDerivedTypeHandling = JsonUnknownDerivedTypeHandling.FallBackToBaseType)]
@@ -1877,6 +1893,7 @@ public partial class UserMessageDataAttachmentsItemGithubReference : UserMessage
 [JsonDerivedType(typeof(UserMessageDataAttachmentsItemDirectory), "directory")]
 [JsonDerivedType(typeof(UserMessageDataAttachmentsItemSelection), "selection")]
 [JsonDerivedType(typeof(UserMessageDataAttachmentsItemGithubReference), "github_reference")]
+[JsonDerivedType(typeof(UserMessageDataAttachmentsItemBlob), "blob")]
 public partial class UserMessageDataAttachmentsItem
 {
     [JsonPropertyName("type")]
@@ -2365,6 +2382,7 @@ public enum PermissionCompletedDataResultKind
 [JsonSerializable(typeof(UserInputRequestedEvent))]
 [JsonSerializable(typeof(UserMessageData))]
 [JsonSerializable(typeof(UserMessageDataAttachmentsItem))]
+[JsonSerializable(typeof(UserMessageDataAttachmentsItemBlob))]
 [JsonSerializable(typeof(UserMessageDataAttachmentsItemDirectory))]
 [JsonSerializable(typeof(UserMessageDataAttachmentsItemDirectoryLineRange))]
 [JsonSerializable(typeof(UserMessageDataAttachmentsItemFile))]

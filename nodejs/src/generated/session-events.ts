@@ -994,6 +994,24 @@ export type SessionEvent =
                */
               url: string;
             }
+          | {
+              /**
+               * Attachment type discriminator
+               */
+              type: "blob";
+              /**
+               * Base64-encoded content
+               */
+              data: string;
+              /**
+               * MIME type of the inline data
+               */
+              mimeType: string;
+              /**
+               * User-facing display name for the attachment
+               */
+              displayName?: string;
+            }
         )[];
         /**
          * Origin of this message, used for timeline filtering (e.g., "skill-pdf" for skill-injected messages that should be hidden from the user)

@@ -836,7 +836,7 @@ export interface MessageOptions {
     prompt: string;
 
     /**
-     * File, directory, or selection attachments
+     * File, directory, selection, or blob attachments
      */
     attachments?: Array<
         | {
@@ -858,6 +858,12 @@ export interface MessageOptions {
                   end: { line: number; character: number };
               };
               text?: string;
+          }
+        | {
+              type: "blob";
+              data: string;
+              mimeType: string;
+              displayName?: string;
           }
     >;
 
