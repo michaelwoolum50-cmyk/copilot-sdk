@@ -201,7 +201,7 @@ func TestSessionRpc(t *testing.T) {
 			t.Fatalf("Failed to create session: %v", err)
 		}
 
-		if err := session.SetModel(t.Context(), "gpt-4.1", nil); err != nil {
+		if err := session.SetModel(t.Context(), "gpt-4.1"); err != nil {
 			t.Fatalf("SetModel returned error: %v", err)
 		}
 	})

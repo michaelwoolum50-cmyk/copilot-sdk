@@ -693,20 +693,19 @@ type SetModelOptions struct {
 
 // SetModel changes the model for this session.
 // The new model takes effect for the next message. Conversation history is preserved.
-// Pass nil for opts if no additional options are needed.
 //
 // Example:
 //
-//	if err := session.SetModel(context.Background(), "gpt-4.1", nil); err != nil {
+//	if err := session.SetModel(context.Background(), "gpt-4.1"); err != nil {
 //	    log.Printf("Failed to set model: %v", err)
 //	}
-//	if err := session.SetModel(context.Background(), "claude-sonnet-4.6", &SetModelOptions{ReasoningEffort: "high"}); err != nil {
+//	if err := session.SetModel(context.Background(), "claude-sonnet-4.6", SetModelOptions{ReasoningEffort: "high"}); err != nil {
 //	    log.Printf("Failed to set model: %v", err)
 //	}
-func (s *Session) SetModel(ctx context.Context, model string, opts *SetModelOptions) error {
+func (s *Session) SetModel(ctx context.Context, model string, opts ...SetModelOptions) error {
 	params := &rpc.SessionModelSwitchToParams{ModelID: model}
-	if opts != nil && opts.ReasoningEffort != "" {
-		re := opts.ReasoningEffort
+	if len(opts) > 0 && opts[0].ReasoningEffort != "" {
+		re := opts[0].ReasoningEffort
 		params.ReasoningEffort = &re
 	}
 	_, err := s.RPC.Model.SwitchTo(ctx, params)

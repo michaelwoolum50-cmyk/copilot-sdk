@@ -73,7 +73,7 @@ public class RpcTests(E2ETestFixture fixture, ITestOutputHelper output) : E2ETes
         Assert.NotNull(before.ModelId);
 
         // Switch to a different model
-        var result = await session.Rpc.Model.SwitchToAsync(modelId: "gpt-4.1", reasoningEffort: null);
+        var result = await session.Rpc.Model.SwitchToAsync(modelId: "gpt-4.1");
         Assert.Equal("gpt-4.1", result.ModelId);
 
         // Verify the switch persisted

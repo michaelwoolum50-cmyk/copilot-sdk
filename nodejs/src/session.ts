@@ -15,6 +15,7 @@ import type {
     PermissionHandler,
     PermissionRequest,
     PermissionRequestResult,
+    ReasoningEffort,
     SessionEvent,
     SessionEventHandler,
     SessionEventPayload,
@@ -694,7 +695,7 @@ export class CopilotSession {
      */
     async setModel(
         model: string,
-        options?: { reasoningEffort?: "low" | "medium" | "high" | "xhigh" }
+        options?: { reasoningEffort?: ReasoningEffort }
     ): Promise<void> {
         await this.rpc.model.switchTo({ modelId: model, ...options });
     }
