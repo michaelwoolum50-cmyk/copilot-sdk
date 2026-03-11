@@ -136,7 +136,7 @@ describe("CopilotSession shell notifications", () => {
 
             session._setShellProcessCallbacks(
                 (processId, s) => registered.set(processId, s),
-                (processId) => registered.delete(processId),
+                (processId) => registered.delete(processId)
             );
 
             session._trackShellProcess("proc-1");

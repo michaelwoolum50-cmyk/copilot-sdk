@@ -592,16 +592,6 @@ func (s *Session) dispatchShellExit(notification ShellExitNotification) {
 	}
 }
 
-// trackShellProcess tracks a shell process ID so notifications are routed to this session.
-func (s *Session) trackShellProcess(processID string) {
-	s.trackedProcessMux.Lock()
-	s.trackedProcessIDs[processID] = struct{}{}
-	s.trackedProcessMux.Unlock()
-	if s.registerShellProc != nil {
-		s.registerShellProc(processID, s)
-	}
-}
-
 // untrackShellProcess stops tracking a shell process ID.
 func (s *Session) untrackShellProcess(processID string) {
 	s.trackedProcessMux.Lock()

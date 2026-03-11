@@ -418,7 +418,7 @@ export class CopilotSession {
      */
     _setShellProcessCallbacks(
         register: (processId: string, session: CopilotSession) => void,
-        unregister: (processId: string) => void,
+        unregister: (processId: string) => void
     ): void {
         this._registerShellProcess = register;
         this._unregisterShellProcess = unregister;

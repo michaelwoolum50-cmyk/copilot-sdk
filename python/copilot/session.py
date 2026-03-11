@@ -5,6 +5,8 @@ This module provides the CopilotSession class for managing individual
 conversation sessions with the Copilot CLI.
 """
 
+from __future__ import annotations
+
 import asyncio
 import inspect
 import threading
@@ -106,7 +108,7 @@ class CopilotSession:
         self._shell_exit_handlers_lock = threading.Lock()
         self._tracked_process_ids: set[str] = set()
         self._tracked_process_ids_lock = threading.Lock()
-        self._register_shell_process: Callable[[str, "CopilotSession"], None] | None = None
+        self._register_shell_process: Callable[[str, CopilotSession], None] | None = None
         self._unregister_shell_process_fn: Callable[[str], None] | None = None
         self._rpc: SessionRpc | None = None
 
@@ -347,7 +349,7 @@ class CopilotSession:
 
     def _set_shell_process_callbacks(
         self,
-        register: Callable[[str, "CopilotSession"], None],
+        register: Callable[[str, CopilotSession], None],
         unregister: Callable[[str], None],
     ) -> None:
         """Set the registration callbacks for shell process tracking.
@@ -807,7 +809,7 @@ class CopilotSession:
         )
         await self.disconnect()
 
-    async def __aenter__(self) -> "CopilotSession":
+    async def __aenter__(self) -> CopilotSession:
         """Enable use as an async context manager."""
         return self
 
